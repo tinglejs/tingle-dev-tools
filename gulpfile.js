@@ -52,7 +52,7 @@ gulp.task('stylus_demo', function(cb) {
     gulp.src(['./tingle/**/*.css','./demo/**/*.styl','!./tingle/tingle-style/**/*.css'])
         .pipe(sourcemaps.init())
         .pipe(stylus())
-        .pipe(concat('<%= ComponentName %>Demo.css'))
+        .pipe(concat('demo.css'))
         .pipe(replace([{
             search: /\/\*#\ssourceMappingURL=([^\*\/]+)\.map\s\*\//g,
             replacement: '/* end for `$1` */\n'
