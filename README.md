@@ -13,6 +13,14 @@
 npm install tingle-dev-tools
 ```
 
+- 修改项目目录中的 `gulpfile.js`
+
+```javascript
+var gulp = require('gulp');
+var devTools = require('tingle-dev-tools');
+gulp.tasks = devTools.tasks;
+```
+
 - 开启调试服务器
 
 ```
