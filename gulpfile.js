@@ -49,7 +49,7 @@ gulp.task('stylus_component', function(cb) {
 });
 
 gulp.task('stylus_demo', function(cb) {
-    gulp.src(['./tingle/**/*.css','./demo/**/*.styl','!./tingle/tingle-style/**/*.css'])
+    gulp.src(['./tingle/**/src/*.css','./demo/**/*.styl','!./tingle/tingle-style/**/*.css'])
         .pipe(sourcemaps.init())
         .pipe(stylus())
         .pipe(concat('demo.css'))
@@ -58,7 +58,7 @@ gulp.task('stylus_demo', function(cb) {
             replacement: '/* end for `$1` */\n'
         }]))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('./demo'));
+        .pipe(gulp.dest('./dist'));
     console.info('###### stylus_demo done ######');
     cb();
 });
