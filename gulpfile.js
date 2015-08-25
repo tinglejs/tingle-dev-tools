@@ -73,6 +73,7 @@ gulp.task('svg_sprite', function () {
         .pipe(svgSymbols({
             templates: ['default-svg']
         }))
+        .pipe(replace(/ fill="#\w+"/g, ''))
         .pipe(gulp.dest('./dist'));
 });
 
