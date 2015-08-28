@@ -32,7 +32,17 @@ gulp.task('pack_demo', function(cb) {
     webpack(require('./webpack.dev.js'), function (err, stats) {
         // 重要 打包过程中的语法错误反映在stats中
         console.log('webpack log:' + stats);
-        if(err) cb(err);
+        if (stats.hasErrors()) {
+            // 异常日志打印到屏幕
+            fs.writeFileSync('./dist/demo.js', [
+                'document.body.innerHTML="<pre>',
+                stats.toJson().errors[0].replace(/[\n\r]/g, '<br>').replace(/\[\d+m/g, '').replace(/"/g, '\\"'),
+                '</pre>";',
+                'document.body.firstChild.style.fontFamily="monospace";',
+                'document.body.firstChild.style.lineHeight="1.5em";',
+                'document.body.firstChild.style.margin="1em";',
+            ].join(''));
+        }
         console.info('###### pack_demo done ######');
         cb();
     });
@@ -132,5 +142,6 @@ gulp.task('develop', [
 // 快捷方式
 gulp.task('d', ['develop']);
 gulp.task('server', ['develop']);
+gulp.task('p', []);
 
 module.exports = gulp;
