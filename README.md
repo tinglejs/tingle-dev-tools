@@ -2,6 +2,8 @@
 
 ---
 
+# This project is deprecated.
+
 这是 tingle 组件开发工具集。独立更新、统一维护。旨在为所有的 tingle 组件开发者提供便捷、一致的开发体验。
 
 
