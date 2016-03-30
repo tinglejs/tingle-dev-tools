@@ -1,6 +1,6 @@
 {
   "name": "tingle-dev-tools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "tingle component develop tools.",
   "main": "gulpfile.js",
   "scripts": {

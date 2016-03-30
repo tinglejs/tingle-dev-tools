@@ -1,3 +1,5 @@
+'use strict'
+
 // https://github.com/gulpjs/gulp/tree/master/docs
 var gulp = require('gulp');
 var fs = require('fs');
@@ -45,13 +47,14 @@ function eslint() {
       title: 'Tingle Notification',
       message: `${report.errorCount} errors and ${report.warningCount} warnings found, please view terminal.`
     })
-    throw new Error('The eslint went wrong')
+    return false
   }
+  return true
 }
 
 gulp.task('pack_demo', function(cb) {
-  try {
-    eslint()
+  let eslintRes = eslint()
+  if (eslintRes) {
     webpack(require('./webpack.dev.js'), function (err, stats) {
       // 重要 打包过程中的语法错误反映在stats中
       console.log('webpack log:' + stats);
@@ -69,8 +72,10 @@ gulp.task('pack_demo', function(cb) {
       console.info('###### pack_demo done ######');
       cb();
     });
-  } catch () {}
-});
+  } else {
+    cb('eslint error');
+  }
+})
 
 gulp.task('stylus_component', function(cb) {
   gulp.src(['./src/**/*.styl'])
@@ -80,7 +85,7 @@ gulp.task('stylus_component', function(cb) {
   .pipe(gulp.dest('./src'));
   console.info('###### stylus_component done ######');
   cb();
-});
+})
 
 gulp.task('stylus_demo', function(cb) {
   gulp.src([
@@ -100,7 +105,7 @@ gulp.task('stylus_demo', function(cb) {
   .pipe(gulp.dest('./dist'));
   console.info('###### stylus_demo done ######');
   cb();
-});
+})
 
 gulp.task('svg_sprite', function () {
   return gulp.src([
@@ -114,7 +119,7 @@ gulp.task('svg_sprite', function () {
   }))
   .pipe(replace(/ fill="#\w+"/g, ''))
   .pipe(gulp.dest('./dist'));
-});
+})
 
 // 将svg插入到html页面
 gulp.task('svg_inject', ['svg_sprite'], function (cb) {
@@ -124,23 +129,23 @@ gulp.task('svg_inject', ['svg_sprite'], function (cb) {
   .pipe(gulp.dest('.'));
   console.info('###### svg source inject done ######');
   cb();
-});
+})
 
 gulp.task('reload_by_js', ['pack_demo'], function () {
   reload();
-});
+}).on('error', (err) => console.log(err))
 
 gulp.task('reload_by_component_css', ['stylus_component'], function () {
   reload();
-});
+})
 
 gulp.task('reload_by_demo_css', ['stylus_demo'], function () {
   reload();
-});
+})
 
 gulp.task('reload_by_svg', ['svg_inject'], function () {
   reload();
-});
+})
 
 // 开发`Tingle component`时，执行`gulp develop` or `gulp d`
 gulp.task('develop', [
@@ -166,11 +171,11 @@ gulp.task('develop', [
     'src/svg/tingle/*.svg', // 来自tingle提供的icon
     'src/svg/custom/*.svg'  // 控件自定义的icon
   ], ['reload_by_svg']);
-});
+})
 
 // 快捷方式
-gulp.task('d', ['develop']);
-gulp.task('server', ['develop']);
-gulp.task('p', []);
+gulp.task('d', ['develop'])
+gulp.task('server', ['develop'])
+gulp.task('p', [])
 
-module.exports = gulp;
+module.exports = gulp
