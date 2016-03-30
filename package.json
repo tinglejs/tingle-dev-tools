@@ -1,6 +1,6 @@
 {
   "name": "tingle-dev-tools",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "tingle component develop tools.",
   "main": "gulpfile.js",
   "scripts": {
@@ -33,6 +33,9 @@
     "gulp-pathmap": "~0.1.0",
     "gulp-svg-symbols": "~0.3.1",
     "gulp-inject-string": "0.0.2",
-    "gulp-html-remove": "~0.1.1"
+    "gulp-html-remove": "~0.1.1",
+    "node-notifier": "^4.5.0",
+    "eslint": "^2.5.3",
+    "eslint-plugin-react": "^4.2.3"
   }
 }
