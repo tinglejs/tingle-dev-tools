@@ -33,7 +33,7 @@ module.exports = {
                 // tingle以外的modules都不需要经过babel解析
                 exclude: function (path) {
                     var isNpmModule = !!path.match(/node_modules/);
-                    var isTingleModule = !!path.match(/node_modules[\/\\]tingle/);
+                    var isTingleModule = !!path.match(/node_modules[\/\\](@ali[\/\\])?tingle/);
                     return isNpmModule && !isTingleModule;
                 },
                 loader: 'babel-loader?stage=1'
